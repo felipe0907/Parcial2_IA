@@ -1,0 +1,104 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{spanish}
+\setmainfont{Latin Modern Roman}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+
+\begin{document}
+
+\section*{Parcial 2}
+
+\subsection*{Predicción de Ingresos con Datos del Censo}
+
+\textbf{Contexto}
+
+En este proyecto analizarás el dataset Adult Census Income del repositorio UCI Machine Learning,
+que contiene datos del censo estadounidense de 1994. El objetivo es desarrollar una red neuronal
+que prediga si una persona gana más de \$50{,}000 anuales basándose en caracteŕisticas demográficas y
+socioeconómicas.
+
+\subsection*{Reglas Generales}
+
+\begin{itemize}
+\item Puedes utilizar recursos de internet como referencia, pero debes comprender el código, no solo copiarlo
+\item Utiliza PyTorch obligatoriamente para implementar redes neuronales
+\item Documenta tu código y decisiones técnicas
+\end{itemize}
+
+\section{Recolección y procesamiento de datos (10\%)}
+
+\begin{enumerate}
+\item Diríjase a la URL \href{https://archive.ics.uci.edu/dataset/2/adult}{https://archive.ics.uci.edu/dataset/2/adult} y descargue el dataset. Cargue los archivos importantes (datos de entrenamiento y de prueba).
+
+Estos pueden ser descargados en Python con el siguiente código:
+
+from ucimlrepo import fetch_ucirepo 
+  
+# fetch dataset 
+adult = fetch_ucirepo(id=2) 
+  
+# data (as pandas dataframes) 
+X = adult.data.features 
+y = adult.data.targets 
+  
+# metadata 
+print(adult.metadata) 
+  
+# variable information 
+print(adult.variables) 
+
+
+\item Con los datos de prueba, haga un split 50/50 para crear los datos de validación.
+\item Realice Exploratory Data Analysis (EDA).
+\item Haga un procesamiento de los datos para sus modelos. Cuidado con el Data Leakage
+\end{enumerate}
+
+\section{Desarrollo de algoritmos (70\%)}
+
+\subsection{Modelo Baseline (10\%)}
+\begin{enumerate}
+\item Realice un modelo de regresión logística y entrénelo.
+\item Obtenga las métricas (las que se usan para un problema de clasificación binario) de entrenamiento/validación/prueba.
+\end{enumerate}
+
+\subsection{Modelo de Redes Neuronales (60\%)}
+\begin{enumerate}
+\item Cree la arquitectura base de la red (MLP)
+\item Defina la función de pérdida y el optimizador.
+\item Cree un loop de entrenamiento que incluya la validación.
+\item Realice al menos 5 experimentos con distintas configuraciones de hiperparámetros. Utilice la GPU. Sea generoso con el número de épocas, capas y neuronas. Haga las gráficas de pérdida vs épocas. Analice las gráficas y detecte si hay overfitting/underfitting.
+\item Investigue en internet e implemente las siguientes técnicas: Dropout y EarlyStopping. Pista: Dropout se implementa dentro de la arquitectura base de la red. EarlyStopping se usa dentro del loop de entrenamiento.
+\item Vuelva a realizar (4) y obtenga el mejor MLP con regularización.
+\item Obtenga las métricas (las que se usan para un problema de clasificación binario) de entrenamiento/validación/prueba.
+\end{enumerate}
+
+\section{Reporte y GitHub (20\%)}
+
+\begin{enumerate}
+\item Cree un reporte en un archivo txt con lo siguiente:
+\begin{itemize}
+  \item Decisiones del procesamiento de datos (Si usaron todas las características, si crearon unas nuevas, el tipo de transformaciones que hicieron, etc.)
+  \item Hiperparámetros del mejor experimento de MLP. Apóyese de las gráficas generadas también. Compare los mejores MLP sin regularización y con regularización.
+  \item Compare el mejor MLP y la regresión lineal a partir de sus métricas. Interprete los resultados.
+\end{itemize}
+\item El codigo se debe correr de inicio a fin y al finalizar debe dar los resultados del mejor MLP. Si los resultados no tienen nada de similitud, se les bajará puntos.
+\item Si el codigo genera algún error de inicio a fin y no se pueden generar los resultados del reporte, se bajarán puntos.
+\end{enumerate}
+
+\bigskip
+\noindent
+\textbf{Resumen de ponderación:}
+\begin{itemize}[label=--]
+\item Recolección y procesamiento de datos (10\%)
+\item Desarrollo de algoritmos (70\%)
+\item Modelo Baseline (10\%)
+\item Modelo de Redes Neuronales (60\%)
+\item Reporte y GitHub (20\%)
+\end{itemize}
+
+\end{document}
